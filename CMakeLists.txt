@@ -36,7 +36,7 @@ if(MSVC)
 	option (FMILIB_BUILD_WITH_STATIC_RTLIB "Use static run-time libraries (/MT or /MTd linker flags)" OFF)
 endif()
 
-option(FMILIB_BUILD_STATIC_LIB	 "Build the library as static." ON)
+option(FMILIB_BUILD_STATIC_LIB	 "Build the library as static." OFF)
 option(FMILIB_BUILD_SHARED_LIB	 "Build the library as shared (dll/so/dylib)." ON)
 option(FMILIB_INSTALL_SUBLIBS	 "Install sub-libraries (fmicapi. fmixml, jmutil, fmiimport, fmizip)" OFF)
 
