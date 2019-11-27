@@ -26,7 +26,7 @@ set(FMILIBRARYHOME ${FMILibrary_SOURCE_DIR})
 set(FMILIBRARYBUILD ${FMILibrary_BINARY_DIR})
 
 # User configuration options and parameters
-SET(FMILIB_INSTALL_PREFIX ${FMILibrary_BINARY_DIR}/../install CACHE PATH "Prefix prepended to install directories")
+SET(FMILIB_INSTALL_PREFIX ${CMAKE_INSTALL_PREFIX}/ CACHE PATH "Prefix prepended to install directories")
 set(FMILIB_THIRDPARTYLIBS  ${FMILibrary_SOURCE_DIR}/ThirdParty CACHE PATH "Path to the ThirdParty library dir" )
 set(FMILIB_FMI_STANDARD_HEADERS  ${FMILIB_THIRDPARTYLIBS}/FMI/default CACHE PATH "Path to the FMI standard headers dir" )
 
@@ -53,7 +53,7 @@ else()
 	set(FMILIB_BUILD_FOR_SHARED_LIBS OFF CACHE INTERNAL "The static library 'fmilib' can be linked into shared libraries. Mostly needed on Linux." FORCE)
 endif()
 
-option (FMILIB_GENERATE_DOXYGEN_DOC "Generate doxygen doc target" ON)
+option (FMILIB_GENERATE_DOXYGEN_DOC "Generate doxygen doc target" OFF)
 
 option (FMILIB_BUILD_TESTS "Build tests" ON)
 option (FMILIB_BUILD_BEFORE_TESTS "Force build before testing" ON)
@@ -281,14 +281,29 @@ if(FMILIB_BUILD_STATIC_LIB)
 endif()
 
 if(FMILIB_BUILD_SHARED_LIB)
-	add_library(fmilib_shared SHARED ${FMILIB_SHARED_SRC})
-
+	add_library(feelpp_fmilib SHARED ${FMILIB_SHARED_SRC})
+    add_library(fmilib_shared ALIAS feelpp_fmilib  )  # to match exported target
+    set_target_properties(feelpp_fmilib PROPERTIES VERSION ${FEELPP_SHARED_VERSION} SOVERSION ${FEELPP_SHARED_SOVERSION})
+    target_include_directories(feelpp_fmilib PUBLIC
+      $<BUILD_INTERFACE:${FMILibrary_BINARY_DIR}/>
+      $<BUILD_INTERFACE:${FMILibrary_SOURCE_DIR}/ThirdParty/FMI/default/>
+      $<BUILD_INTERFACE:${FMILibrary_SOURCE_DIR}/src/CAPI/include/>
+      $<BUILD_INTERFACE:${FMILibrary_SOURCE_DIR}/src/Import/include/>
+      $<BUILD_INTERFACE:${FMILibrary_SOURCE_DIR}/src/Util/include/>
+      $<BUILD_INTERFACE:${FMILibrary_SOURCE_DIR}/src/XML/include/>
+      $<BUILD_INTERFACE:${FMILibrary_SOURCE_DIR}/src/ZIP/include/>
+      $<INSTALL_INTERFACE:include/feelpp/fmilib> ) 
     if (UNIX)
-        target_compile_definitions(fmilib_shared PRIVATE -D_GNU_SOURCE)
+        target_compile_definitions(feelpp_fmilib PRIVATE -D_GNU_SOURCE)
     endif()
 
-	target_link_libraries(fmilib_shared ${FMILIB_SHARED_SUBLIBS})
-	set(FMILIB_TARGETS ${FMILIB_TARGETS} fmilib_shared)
+	target_link_libraries(feelpp_fmilib ${FMILIB_SHARED_SUBLIBS})
+	set(FMILIB_TARGETS ${FMILIB_TARGETS} feelpp_fmilib)
+    install(TARGETS feelpp_fmilib fmixml fmizip fmicapi minizip zlib c99snprintf jmutils
+      EXPORT feelpp-contrib-export-targets
+      LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+      RUNTIME DESTINATION ${CMAKE_INSTALL_LIBDIR}
+      ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
 endif()
 
 if(FMILIB_BUILD_TESTS)
@@ -315,27 +330,27 @@ install(FILES
 install(FILES 
 			"${FMILibrary_BINARY_DIR}/fmilib_config.h" 
 			"${FMILibrary_BINARY_DIR}/fmilib.h" 
-		DESTINATION include)
+		    DESTINATION include/feelpp/fmilib )
 
 install(DIRECTORY 
-	${FMIIMPORTDIR}/include 
-	${JMUTILDIR}/include
-	DESTINATION .
+	${FMIIMPORTDIR}/include/
+	${JMUTILDIR}/include/
+	DESTINATION include/feelpp/fmilib
     FILES_MATCHING PATTERN "*.h")
 
 if(FMILIB_INSTALL_SUBLIBS)
 	install(DIRECTORY 
-		${FMICAPIDIR}/include 	
-		${FMIXMLDIR}/include 
-		${FMIZIPDIR}/include
-		DESTINATION .
+		${FMICAPIDIR}/include/ 	
+		${FMIXMLDIR}/include/
+		${FMIZIPDIR}/include/
+		DESTINATION include/feelpp/fmilib
         FILES_MATCHING PATTERN "*.h")
 endif()
 	
 install(DIRECTORY 
 	${FMILIB_FMI_STANDARD_HEADERS}/FMI1
 	${FMILIB_FMI_STANDARD_HEADERS}/FMI2
-	DESTINATION include
+	DESTINATION include/feelpp/fmilib
     FILES_MATCHING PATTERN "*.h")
 
 function(append_file_context file_out file_in)
