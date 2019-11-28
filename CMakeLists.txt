@@ -299,11 +299,15 @@ if(FMILIB_BUILD_SHARED_LIB)
 
 	target_link_libraries(feelpp_fmilib ${FMILIB_SHARED_SUBLIBS})
 	set(FMILIB_TARGETS ${FMILIB_TARGETS} feelpp_fmilib)
-    install(TARGETS feelpp_fmilib fmixml fmizip fmicapi minizip zlib c99snprintf jmutils
-      EXPORT feelpp-contrib-export-targets
-      LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-      RUNTIME DESTINATION ${CMAKE_INSTALL_LIBDIR}
-      ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
+    foreach( target feelpp_fmilib fmixml fmizip fmicapi minizip zlib c99snprintf jmutils )
+      if ( TARGET ${target} ) 
+        install(TARGETS ${target}
+          EXPORT feelpp-contrib-export-targets
+          LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+          RUNTIME DESTINATION ${CMAKE_INSTALL_LIBDIR}
+          ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
+      endif()
+    endforeach()
 endif()
 
 if(FMILIB_BUILD_TESTS)
