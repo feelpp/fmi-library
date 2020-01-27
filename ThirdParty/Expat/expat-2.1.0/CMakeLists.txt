@@ -60,11 +60,11 @@ else(BUILD_shared)
     set(_SHARED STATIC)
 endif(BUILD_shared)
 
-add_library(expat ${_SHARED} ${expat_SRCS})
+add_library(feelpp_expat ${_SHARED} ${expat_SRCS})
 
-install(TARGETS expat RUNTIME DESTINATION bin
-                      LIBRARY DESTINATION lib
-                      ARCHIVE DESTINATION lib)
+install(TARGETS feelpp_expat RUNTIME DESTINATION bin
+  LIBRARY DESTINATION lib
+  ARCHIVE DESTINATION lib)
 
 set(prefix ${CMAKE_INSTALL_PREFIX})
 set(exec_prefix "\${prefix}/bin")
@@ -86,26 +86,26 @@ if(BUILD_tools AND NOT WINCE)
     )
 
     add_executable(xmlwf ${xmlwf_SRCS})
-    target_link_libraries(xmlwf expat)
+    target_link_libraries(xmlwf feelpp_expat)
     install(TARGETS xmlwf DESTINATION bin)
     install(FILES doc/xmlwf.1 DESTINATION share/man/man1)
 endif(BUILD_tools AND NOT WINCE)
 
 if(BUILD_examples)
     add_executable(elements examples/elements.c)
-    target_link_libraries(elements expat)
+    target_link_libraries(elements feelpp_expat)
 
     add_executable(outline examples/outline.c)
-    target_link_libraries(outline expat)
+    target_link_libraries(outline feelpp_expat)
 endif(BUILD_examples)
 
 if(BUILD_tests)
     ## these are unittests that can be run on any platform
     add_executable(runtests tests/runtests.c tests/chardata.c tests/minicheck.c)
-    target_link_libraries(runtests expat)
+    target_link_libraries(runtests feelpp_expat)
     add_test(runtests runtests)
 
     add_executable(runtestspp tests/runtestspp.cpp tests/chardata.c tests/minicheck.c)
-    target_link_libraries(runtestspp expat)
+    target_link_libraries(runtestspp feelpp_expat)
     add_test(runtestspp runtestspp)
 endif(BUILD_tests)

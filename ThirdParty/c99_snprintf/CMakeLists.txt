@@ -119,7 +119,7 @@ add_definitions(${DEFINES})
 
 file(WRITE ${CMAKE_BINARY_DIR}/c99snprintf_defs "${DEFINES}")
 
-add_library(c99snprintf c99-snprintf_1.1/snprintf.c)
+add_library(feelpp_c99snprintf c99-snprintf_1.1/snprintf.c)
 
 if(CYGWIN) 
 message("not tested")

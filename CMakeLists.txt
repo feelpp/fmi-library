@@ -231,7 +231,7 @@ configure_file (
   "${FMILibrary_BINARY_DIR}/fmilib_config.h"
   ) 
 
-set(FMILIB_SHARED_SUBLIBS ${FMIXML_LIBRARIES} ${FMIZIP_LIBRARIES} ${FMICAPI_LIBRARIES} expat minizip zlib c99snprintf)
+set(FMILIB_SHARED_SUBLIBS ${FMIXML_LIBRARIES} ${FMIZIP_LIBRARIES} ${FMICAPI_LIBRARIES} feelpp_expat feelpp_minizip feelpp_zlib feelpp_c99snprintf)
 set(FMILIB_SUBLIBS ${FMIIMPORT_LIBRARIES} ${JMUTIL_LIBRARIES} ${FMILIB_SHARED_SUBLIBS})
 set(FMILIB_SHARED_SRC ${FMIIMPORTSOURCE} ${JMUTILSOURCE} ${FMIIMPORTHEADERS})
 
@@ -257,7 +257,7 @@ set_target_properties(
     PROPERTIES FOLDER "Sublibs")
 	
 if(FMILIB_INSTALL_SUBLIBS)
-	set(FMILIB_TARGETS fmiimport jmutils fmizip fmixml fmicapi)
+	set(FMILIB_TARGETS feelpp_fmiimport feelpp_jmutils feelpp_fmizip feelpp_fmixml feelpp_fmicapi)
 endif()
 	
 if(FMILIB_BUILD_STATIC_LIB)
@@ -299,7 +299,7 @@ if(FMILIB_BUILD_SHARED_LIB)
 
 	target_link_libraries(feelpp_fmilib ${FMILIB_SHARED_SUBLIBS})
 	set(FMILIB_TARGETS ${FMILIB_TARGETS} feelpp_fmilib)
-    foreach( target feelpp_fmilib fmixml fmizip fmicapi minizip zlib c99snprintf jmutils )
+    foreach( target feelpp_fmilib feelpp_fmixml feelpp_fmizip feelpp_fmicapi feelpp_minizip feelpp_zlib feelpp_c99snprintf feelpp_jmutils )
       if ( TARGET ${target} ) 
         install(TARGETS ${target}
           EXPORT feelpp-contrib-export-targets

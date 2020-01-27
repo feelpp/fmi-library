@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 2.8)
 
 project(minizip C)
 
-set(BUILD_SHARED_LIBS OFF)
+set(BUILD_SHARED_LIBS ON)
 set(SKIP_INSTALL_HEADERS ON)
 set(SKIP_INSTALL_FILES ON)
 if(NOT FMILIB_INSTALL_SUBLIBS)
@@ -11,7 +11,7 @@ endif()
 add_subdirectory("${FMILIB_THIRDPARTYLIBS}/Zlib/zlib-1.2.6" "${FMILibrary_BINARY_DIR}/zlib")
 
 if(CMAKE_CL_64)
-	set_target_properties(zlib PROPERTIES STATIC_LIBRARY_FLAGS "/machine:x64")
+	set_target_properties(feelpp_zlib PROPERTIES STATIC_LIBRARY_FLAGS "/machine:x64")
 endif()
 
 if(CMAKE_HOST_APPLE)
@@ -56,12 +56,12 @@ if(WIN32)
     set(HEADERS ${HEADERS} ${FMILIB_THIRDPARTYLIBS}/Minizip/minizip/iowin32.h)
 endif(WIN32)
 
-add_library(minizip ${SOURCE} ${HEADERS})
+add_library(feelpp_minizip ${SOURCE} ${HEADERS})
 
-target_link_libraries(minizip zlib)
+target_link_libraries(feelpp_minizip feelpp_zlib)
 
 if(FMILIB_INSTALL_SUBLIBS)
-	install(TARGETS minizip
+	install(TARGETS feelpp_minizip
         ARCHIVE DESTINATION lib
         LIBRARY DESTINATION lib 
 	)

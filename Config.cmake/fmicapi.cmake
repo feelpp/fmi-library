@@ -19,7 +19,7 @@ set(FMICAPIDIR ${FMILIBRARYHOME}/src/CAPI)
 include(jmutil)
 
 include_directories("${FMICAPIDIR}/include" "${FMICAPIDIR}/src")
-set(FMICAPI_LIBRARIES fmicapi)
+set(FMICAPI_LIBRARIES feelpp_fmicapi)
 
 set(FMICAPISOURCE
     src/FMI1/fmi1_capi_cs.c
@@ -41,9 +41,9 @@ include_directories(${FMILIB_FMI_STANDARD_HEADERS})
 PREFIXLIST(FMICAPISOURCE  ${FMICAPIDIR}/)
 PREFIXLIST(FMICAPIHEADERS ${FMICAPIDIR}/)
 
-add_library(fmicapi ${FMILIBKIND} ${FMICAPISOURCE} ${FMICAPIHEADERS})
+add_library(feelpp_fmicapi ${FMILIBKIND} ${FMICAPISOURCE} ${FMICAPIHEADERS})
 
-target_link_libraries(fmicapi ${JMUTIL_LIBRARIES})
+target_link_libraries(feelpp_fmicapi ${JMUTIL_LIBRARIES})
 
 # install(DIRECTORY ${FMIXMLDIR}/include DESTINATION .)
 # install(DIRECTORY ${FMICAPIDIR}/include DESTINATION .)

@@ -13,7 +13,7 @@
 
 if(NOT JMUTILDIR)
     set(JMUTILDIR ${FMILIBRARYHOME}/src/Util/)
-    set(JMUTIL_LIBRARIES jmutils)
+    set(JMUTIL_LIBRARIES feelpp_jmutils)
     include_directories ("${JMUTILDIR}/include" "${FMILIB_FMI_STANDARD_HEADERS}")
 	set(DOXYFILE_EXTRA_SOURCES "${DOXYFILE_EXTRA_SOURCES} \"${JMUTILDIR}/include\"")
 
@@ -54,20 +54,20 @@ set(JMUTILHEADERS
 PREFIXLIST(JMUTILSOURCE  ${JMUTILDIR}/src/)
 PREFIXLIST(JMUTILHEADERS ${JMUTILDIR}/include/)
 
-add_library(jmutils ${FMILIBKIND} ${JMUTILSOURCE} ${JMUTILHEADERS})
+add_library(feelpp_jmutils ${FMILIBKIND} ${JMUTILSOURCE} ${JMUTILHEADERS})
 
 if(CYGWIN) 
 message("not tested")
 endif(CYGWIN)
 
-target_link_libraries(jmutils c99snprintf)
+target_link_libraries(feelpp_jmutils feelpp_c99snprintf)
 
 if(UNIX)
-    target_compile_definitions(jmutils PRIVATE -D_GNU_SOURCE)
-	target_link_libraries(jmutils dl)
+    target_compile_definitions(feelpp_jmutils PRIVATE -D_GNU_SOURCE)
+	target_link_libraries(feelpp_jmutils dl)
 endif(UNIX)
 if(WIN32)
-	target_link_libraries(jmutils Shlwapi)
+	target_link_libraries(feelpp_jmutils Shlwapi)
 endif(WIN32)
 
 endif(NOT JMUTILDIR)

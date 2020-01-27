@@ -139,10 +139,10 @@ if(MINGW)
     set(ZLIB_SRCS ${ZLIB_SRCS} ${CMAKE_CURRENT_BINARY_DIR}/zlib1rc.obj)
 endif(MINGW)
 
-add_library(zlib ${ZLIB_SRCS} ${ZLIB_PUBLIC_HDRS} ${ZLIB_PRIVATE_HDRS})
-set_target_properties(zlib PROPERTIES DEFINE_SYMBOL ZLIB_DLL)
+add_library(feelpp_zlib ${ZLIB_SRCS} ${ZLIB_PUBLIC_HDRS} ${ZLIB_PRIVATE_HDRS})
+set_target_properties(feelpp_zlib PROPERTIES DEFINE_SYMBOL ZLIB_DLL)
 
-set_target_properties(zlib PROPERTIES SOVERSION 1)
+set_target_properties(feelpp_zlib PROPERTIES SOVERSION 1)
 
 if(NOT CYGWIN)
     # This property causes shared libraries on Linux to have the full version
@@ -152,19 +152,19 @@ if(NOT CYGWIN)
     #
     # This has no effect with MSVC, on that platform the version info for
     # the DLL comes from the resource file win32/zlib1.rc
-    set_target_properties(zlib PROPERTIES VERSION ${ZLIB_FULL_VERSION})
+    set_target_properties(feelpp_zlib PROPERTIES VERSION ${ZLIB_FULL_VERSION})
 endif()
 
 if(UNIX)
     # On unix-like platforms the library is almost always called libz
-   set_target_properties(zlib PROPERTIES OUTPUT_NAME z)
+   set_target_properties(feelpp_zlib PROPERTIES OUTPUT_NAME feelpp_z)
 elseif(BUILD_SHARED_LIBS AND WIN32)
     # Creates zlib1.dll when building shared library version
-    set_target_properties(zlib PROPERTIES SUFFIX "1.dll")
+    set_target_properties(feelpp_zlib PROPERTIES SUFFIX "1.dll")
 endif()
 
 if(NOT SKIP_INSTALL_LIBRARIES AND NOT SKIP_INSTALL_ALL )
-    install(TARGETS zlib
+    install(TARGETS feelpp_zlib
         RUNTIME DESTINATION bin
         ARCHIVE DESTINATION lib
         LIBRARY DESTINATION lib )

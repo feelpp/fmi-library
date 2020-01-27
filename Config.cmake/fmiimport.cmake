@@ -20,7 +20,7 @@ include(fmicapi)
 set(DOXYFILE_EXTRA_SOURCES "${DOXYFILE_EXTRA_SOURCES} \"${FMIIMPORTDIR}/include\"")
 
 include_directories("${FMIIMPORTDIR}" "${FMIIMPORTDIR}/include" "${FMILIB_THIRDPARTYLIBS}/FMI/")
-set(FMIIMPORT_LIBRARIES fmiimport)
+set(FMIIMPORT_LIBRARIES feelpp_fmiimport)
 
 set(FMIIMPORT_PUBHEADERS
 	include/FMI1/fmi1_import.h
@@ -87,8 +87,8 @@ set(FMIIMPORTSOURCE
 
 PREFIXLIST(FMIIMPORTSOURCE  ${FMIIMPORTDIR}/)
 
-add_library(fmiimport ${FMILIBKIND} ${FMIIMPORTSOURCE} ${FMIIMPORTHEADERS})
-target_link_libraries(fmiimport ${JMUTIL_LIBRARIES} ${FMIXML_LIBRARIES} ${FMIZIP_LIBRARIES} ${FMICAPI_LIBRARIES})
+add_library(feelpp_fmiimport ${FMILIBKIND} ${FMIIMPORTSOURCE} ${FMIIMPORTHEADERS})
+target_link_libraries(feelpp_fmiimport ${JMUTIL_LIBRARIES} ${FMIXML_LIBRARIES} ${FMIZIP_LIBRARIES} ${FMICAPI_LIBRARIES})
 #target_link_libraries(fmiimportshared fmiimport)
 
 #add_library(fmiimport_shared SHARED ${FMIIMPORTSOURCE} ${FMIIMPORTHEADERS} )

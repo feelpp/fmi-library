@@ -82,7 +82,7 @@ endif()
 # set(DOXYFILE_EXTRA_SOURCES "${DOXYFILE_EXTRA_SOURCES} \"${FMIXMLDIR}/include\"")
 
 include_directories("${FMIXMLDIR}/include" "${FMILIB_THIRDPARTYLIBS}/FMI/")
-set(FMIXML_LIBRARIES fmixml)
+set(FMIXML_LIBRARIES feelpp_fmixml)
 set(FMIXML_EXPAT_DIR "${FMILIB_THIRDPARTYLIBS}/Expat/expat-2.1.0") 
 
 set(FMIXMLHEADERS
@@ -186,14 +186,14 @@ add_dependencies(expatex ${CMAKE_BINARY_DIR}/CMakeCache.txt ${FMILIBRARYHOME}/CM
   
 set(expatlib "${CMAKE_BINARY_DIR}/ExpatEx/${CMAKE_CFG_INTDIR}/${CMAKE_STATIC_LIBRARY_PREFIX}expat${CMAKE_STATIC_LIBRARY_SUFFIX}")
   
-add_library(expat STATIC IMPORTED)
+add_library(feelpp_expat STATIC IMPORTED)
 
 set_target_properties(
-	expat PROPERTIES 
+	feelpp_expat PROPERTIES 
 		IMPORTED_LOCATION "${expatlib}"
 )
 
-add_dependencies(expat expatex)
+add_dependencies(feelpp_expat expatex)
 
 if(FMILIB_INSTALL_SUBLIBS)
 	install(FILES 
@@ -217,8 +217,8 @@ list(APPEND FMIXMLSOURCE
 
 debug_message(STATUS "adding fmixml")
 
-add_library(fmixml ${FMILIBKIND} ${FMIXMLSOURCE} ${FMIXMLHEADERS})
+add_library(feelpp_fmixml ${FMILIBKIND} ${FMIXMLSOURCE} ${FMIXMLHEADERS})
 
-target_link_libraries(fmixml ${JMUTIL_LIBRARIES} expat)
+target_link_libraries(feelpp_fmixml ${JMUTIL_LIBRARIES} feelpp_expat)
 
 endif(NOT FMIXMLDIR)

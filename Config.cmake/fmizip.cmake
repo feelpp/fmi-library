@@ -18,7 +18,7 @@ if(NOT FMIZIPDIR)
 	
 	# set(DOXYFILE_EXTRA_SOURCES "${DOXYFILE_EXTRA_SOURCES} \"${FMIZIPDIR}/include\"")
 
-    set(FMIZIP_LIBRARIES fmizip)
+    set(FMIZIP_LIBRARIES feelpp_fmizip)
 	
     add_subdirectory(Config.cmake/Minizip)
 	
@@ -39,8 +39,8 @@ set(FMIZIPHEADERS
 
 SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DZLIB_STATIC")
 
-add_library(fmizip ${FMILIBKIND} ${FMIZIPSOURCE} ${FMIZIPHEADERS})
+add_library(feelpp_fmizip ${FMILIBKIND} ${FMIZIPSOURCE} ${FMIZIPHEADERS})
 
-target_link_libraries(fmizip minizip jmutils)
+target_link_libraries(feelpp_fmizip feelpp_minizip feelpp_jmutils)
 
 endif(NOT FMIZIPDIR)
