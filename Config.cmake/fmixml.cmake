@@ -197,7 +197,7 @@ add_dependencies(feelpp_expat expatex)
 
 if(FMILIB_INSTALL_SUBLIBS)
 	install(FILES 
-	"${CMAKE_BINARY_DIR}/ExpatEx/install/lib/${CMAKE_STATIC_LIBRARY_PREFIX}expat${CMAKE_STATIC_LIBRARY_SUFFIX}"
+	"${CMAKE_BINARY_DIR}/ExpatEx/install/lib/${CMAKE_STATIC_LIBRARY_PREFIX}feelpp_expat${CMAKE_STATIC_LIBRARY_SUFFIX}"
 	DESTINATION lib)
 endif()
 
