@@ -59,6 +59,7 @@ endif(WIN32)
 add_library(feelpp_minizip ${SOURCE} ${HEADERS})
 
 target_link_libraries(feelpp_minizip feelpp_zlib)
+set_target_properties(feelpp_minizip PROPERTIES SOVERSION 1)
 
 if(FMILIB_INSTALL_SUBLIBS)
 	install(TARGETS feelpp_minizip
