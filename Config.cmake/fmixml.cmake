@@ -139,6 +139,7 @@ set(FMIXMLSOURCE
 
 SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DXML_STATIC -DFMI_XML_QUERY")
 
+if ( 0 )
 include(ExternalProject)
 
 set(EXPAT_SETTINGS
@@ -204,7 +205,11 @@ endif()
 set(EXPAT_INCLUDE_DIRS ${CMAKE_BINARY_DIR}/ExpatEx/install/include)
 
 include_directories("${EXPAT_INCLUDE_DIRS}" "${FMILIB_THIRDPARTYLIBS}/FMI/" "${FMIXMLGENDIR}/FMI1" "${FMIXMLGENDIR}/FMI2")
-
+else()
+  include_directories("${FMILIB_THIRDPARTYLIBS}/FMI/" "${FMIXMLGENDIR}/FMI1" "${FMIXMLGENDIR}/FMI2")
+  message(STATUS "add expat dir")
+  add_subdirectory(${FMILIB_THIRDPARTYLIBS}/Expat/expat-2.1.0)
+endif()
 PREFIXLIST(FMIXMLSOURCE  ${FMIXMLDIR}/)
 PREFIXLIST(FMIXMLHEADERS ${FMIXMLDIR}/)
 

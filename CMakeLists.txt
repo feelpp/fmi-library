@@ -299,7 +299,7 @@ if(FMILIB_BUILD_SHARED_LIB)
 
 	target_link_libraries(feelpp_fmilib ${FMILIB_SHARED_SUBLIBS})
 	set(FMILIB_TARGETS ${FMILIB_TARGETS} feelpp_fmilib)
-    foreach( target feelpp_fmilib feelpp_fmixml feelpp_fmizip feelpp_fmicapi feelpp_minizip feelpp_zlib feelpp_c99snprintf feelpp_jmutils )
+    foreach( target feelpp_fmilib feelpp_fmixml feelpp_fmizip feelpp_fmicapi feelpp_minizip feelpp_zlib feelpp_c99snprintf feelpp_jmutils feelpp_expat)
       if ( TARGET ${target} ) 
         install(TARGETS ${target}
           EXPORT feelpp-contrib-export-targets

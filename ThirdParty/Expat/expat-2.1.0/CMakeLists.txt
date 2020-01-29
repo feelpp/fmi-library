@@ -10,9 +10,9 @@ set(PACKAGE_VERSION "2.1.0")
 set(PACKAGE_STRING "${PACKAGE_NAME} ${PACKAGE_VERSION}")
 set(PACKAGE_TARNAME "${PACKAGE_NAME}")
 
-option(BUILD_tools "build the xmlwf tool for expat library" ON)
-option(BUILD_examples "build the examples for expat library" ON)
-option(BUILD_tests "build the tests for expat library" ON)
+option(BUILD_tools "build the xmlwf tool for expat library" OFF)
+option(BUILD_examples "build the examples for expat library" OFF)
+option(BUILD_tests "build the tests for expat library" OFF)
 option(BUILD_shared "build a shared expat library" ON)
 
 # configuration options
@@ -61,7 +61,7 @@ else(BUILD_shared)
 endif(BUILD_shared)
 
 add_library(feelpp_expat ${_SHARED} ${expat_SRCS})
-
+set_target_properties(feelpp_expat PROPERTIES VERSION 2.1.0 SOVERSION 2.1.0)
 install(TARGETS feelpp_expat RUNTIME DESTINATION bin
   LIBRARY DESTINATION lib
   ARCHIVE DESTINATION lib)
@@ -72,8 +72,8 @@ set(libdir "\${prefix}/lib")
 set(includedir "\${prefix}/include")
 configure_file(expat.pc.in ${CMAKE_CURRENT_BINARY_DIR}/expat.pc)
 
-install(FILES lib/expat.h lib/expat_external.h DESTINATION include)
-install(FILES ${CMAKE_CURRENT_BINARY_DIR}/expat.pc DESTINATION lib/pkgconfig)
+#install(FILES lib/expat.h lib/expat_external.h DESTINATION include)
+#install(FILES ${CMAKE_CURRENT_BINARY_DIR}/expat.pc DESTINATION lib/pkgconfig)
 
 
 
