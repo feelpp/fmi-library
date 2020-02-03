@@ -56,7 +56,7 @@ if(WIN32)
     set(HEADERS ${HEADERS} ${FMILIB_THIRDPARTYLIBS}/Minizip/minizip/iowin32.h)
 endif(WIN32)
 
-add_library(feelpp_minizip ${SOURCE} ${HEADERS})
+add_library(feelpp_minizip SHARED ${SOURCE} ${HEADERS})
 
 target_link_libraries(feelpp_minizip feelpp_zlib)
 set_target_properties(feelpp_minizip PROPERTIES SOVERSION 1)

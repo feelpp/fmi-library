@@ -42,5 +42,5 @@ SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DZLIB_STATIC")
 add_library(feelpp_fmizip ${FMILIBKIND} ${FMIZIPSOURCE} ${FMIZIPHEADERS})
 
 target_link_libraries(feelpp_fmizip feelpp_minizip feelpp_jmutils)
-
+set_target_properties(feelpp_fmizip PROPERTIES VERSION 1 SOVERSION 1 )
 endif(NOT FMIZIPDIR)

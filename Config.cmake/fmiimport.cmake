@@ -89,6 +89,7 @@ PREFIXLIST(FMIIMPORTSOURCE  ${FMIIMPORTDIR}/)
 
 add_library(feelpp_fmiimport ${FMILIBKIND} ${FMIIMPORTSOURCE} ${FMIIMPORTHEADERS})
 target_link_libraries(feelpp_fmiimport ${JMUTIL_LIBRARIES} ${FMIXML_LIBRARIES} ${FMIZIP_LIBRARIES} ${FMICAPI_LIBRARIES})
+set_target_properties(feelpp_fmiimport PROPERTIES VERSION 1 SOVERSION 1 )
 #target_link_libraries(fmiimportshared fmiimport)
 
 #add_library(fmiimport_shared SHARED ${FMIIMPORTSOURCE} ${FMIIMPORTHEADERS} )

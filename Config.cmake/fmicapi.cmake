@@ -44,7 +44,7 @@ PREFIXLIST(FMICAPIHEADERS ${FMICAPIDIR}/)
 add_library(feelpp_fmicapi ${FMILIBKIND} ${FMICAPISOURCE} ${FMICAPIHEADERS})
 
 target_link_libraries(feelpp_fmicapi ${JMUTIL_LIBRARIES})
-
+set_target_properties(feelpp_fmicapi PROPERTIES VERSION 1 SOVERSION 1 )
 # install(DIRECTORY ${FMIXMLDIR}/include DESTINATION .)
 # install(DIRECTORY ${FMICAPIDIR}/include DESTINATION .)
 #install(DIRECTORY ${JMRUNTIMEHOME}/FMI/ZIP/include DESTINATION include)

@@ -55,7 +55,7 @@ PREFIXLIST(JMUTILSOURCE  ${JMUTILDIR}/src/)
 PREFIXLIST(JMUTILHEADERS ${JMUTILDIR}/include/)
 
 add_library(feelpp_jmutils ${FMILIBKIND} ${JMUTILSOURCE} ${JMUTILHEADERS})
-
+set_target_properties(feelpp_jmutils PROPERTIES VERSION 1 SOVERSION 1 )
 if(CYGWIN) 
 message("not tested")
 endif(CYGWIN)

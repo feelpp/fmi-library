@@ -225,5 +225,6 @@ debug_message(STATUS "adding fmixml")
 add_library(feelpp_fmixml ${FMILIBKIND} ${FMIXMLSOURCE} ${FMIXMLHEADERS})
 
 target_link_libraries(feelpp_fmixml ${JMUTIL_LIBRARIES} feelpp_expat)
+set_target_properties(feelpp_fmixml PROPERTIES VERSION 1 SOVERSION 1 )
 
 endif(NOT FMIXMLDIR)
