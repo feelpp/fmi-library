@@ -55,7 +55,7 @@ endif()
 
 option (FMILIB_GENERATE_DOXYGEN_DOC "Generate doxygen doc target" OFF)
 
-option (FMILIB_BUILD_TESTS "Build tests" ON)
+option (FMILIB_BUILD_TESTS "Build tests" OFF)
 option (FMILIB_BUILD_BEFORE_TESTS "Force build before testing" ON)
 option(FMILIB_LINK_TEST_TO_SHAREDLIB "Link the tests to fmilib_shared (if built) instead of fmilib" ON)
 
@@ -281,7 +281,8 @@ if(FMILIB_BUILD_STATIC_LIB)
 endif()
 
 if(FMILIB_BUILD_SHARED_LIB)
-	add_library(feelpp_fmilib SHARED ${FMILIB_SHARED_SRC})
+  add_library(feelpp_fmilib SHARED ${FMILIB_SHARED_SRC})
+  add_library( Feelpp::feelpp_fmilib ALIAS feelpp_fmilib)
     add_library(fmilib_shared ALIAS feelpp_fmilib  )  # to match exported target
     set_target_properties(feelpp_fmilib PROPERTIES VERSION ${FEELPP_SHARED_VERSION} SOVERSION ${FEELPP_SHARED_SOVERSION})
     target_include_directories(feelpp_fmilib PUBLIC
@@ -296,12 +297,10 @@ if(FMILIB_BUILD_SHARED_LIB)
     if (UNIX)
         target_compile_definitions(feelpp_fmilib PRIVATE -D_GNU_SOURCE)
     endif()
-
-    message(STATUS  "fmi sublibs:  ${FMILIB_SHARED_SUBLIBS}")
-	target_link_libraries(feelpp_fmilib PUBLIC ${FMILIB_SHARED_SUBLIBS})
-	set(FMILIB_TARGETS ${FMILIB_TARGETS} feelpp_fmilib)
-    foreach( target feelpp_fmilib feelpp_fmixml feelpp_fmizip feelpp_fmicapi feelpp_minizip feelpp_zlib feelpp_c99snprintf feelpp_jmutils feelpp_expat)
-      if ( TARGET ${target} ) 
+	
+    foreach( target feelpp_fmiimport feelpp_fmixml feelpp_fmizip feelpp_fmicapi feelpp_minizip feelpp_zlib feelpp_c99snprintf feelpp_jmutils feelpp_expat)
+      if ( TARGET ${target} )
+        #xtarget_link_libraries(feelpp_fmilib PUBLIC ${target})
         install(TARGETS ${target}
           EXPORT feelpp-contrib-export-targets
           LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
@@ -309,6 +308,14 @@ if(FMILIB_BUILD_SHARED_LIB)
           ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
       endif()
     endforeach()
+    #target_link_libraries(feelpp_fmilib PUBLIC ${FMILIB_TARGETS})
+    target_link_libraries(feelpp_fmilib PUBLIC feelpp_fmiimport)
+    install(TARGETS  feelpp_fmilib
+      EXPORT feelpp-contrib-export-targets
+      LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+      RUNTIME DESTINATION ${CMAKE_INSTALL_LIBDIR}
+      ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
+
 endif()
 
 if(FMILIB_BUILD_TESTS)
@@ -320,12 +327,12 @@ if(FMILIB_BUILD_TESTS)
 endif()
 
 file(COPY "${FMILIBRARYHOME}/Config.cmake/fmilib.h" DESTINATION "${FMILibrary_BINARY_DIR}")
-
-install(TARGETS ${FMILIB_TARGETS}
-	ARCHIVE DESTINATION lib
-	LIBRARY DESTINATION lib
-	RUNTIME DESTINATION lib
-)
+set(FMILIB_TARGETS ${FMILIB_TARGETS} feelpp_fmilib)
+# install(TARGETS ${FMILIB_TARGETS}
+#   ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+#   LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+#   RUNTIME DESTINATION ${CMAKE_INSTALL_LIBDIR}
+# )
 install(FILES 
 			"${FMILIBRARYHOME}/FMILIB_Readme.txt"
 			"${FMILIBRARYHOME}/FMILIB_License.txt"
