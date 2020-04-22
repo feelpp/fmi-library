@@ -37,7 +37,7 @@ endif(BUILD_tests)
 
 include(ConfigureChecks.cmake)
 
-include_directories(${CMAKE_BINARY_DIR} ${CMAKE_SOURCE_DIR}/lib)
+#include_directories(${CMAKE_BINARY_DIR} ${CMAKE_SOURCE_DIR}/lib)
 if(MSVC)
     add_definitions(-D_CRT_SECURE_NO_WARNINGS -wd4996)
 endif(MSVC)
@@ -61,6 +61,10 @@ else(BUILD_shared)
 endif(BUILD_shared)
 
 add_library(feelpp_expat ${_SHARED} ${expat_SRCS})
+target_include_directories(feelpp_expat PRIVATE
+  $<BUILD_INTERFACE:${expat_BINARY_DIR}/>
+  $<BUILD_INTERFACE:${expat_SOURCE_DIR}/ThirdParty/FMI/default/>
+  )
 set_target_properties(feelpp_expat PROPERTIES VERSION 2.1.0 SOVERSION 2.1.0)
 install(TARGETS feelpp_expat RUNTIME DESTINATION bin
   LIBRARY DESTINATION lib
